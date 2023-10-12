@@ -44,9 +44,36 @@ products.forEach((product) => {
                     Added
                     </div>
 
-                    <button class="add-to-cart-button button-primary">
+                    <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id = "${product.id}" >
                     Add to Cart
                     </button>
                 </div>`;
 })
 document.querySelector('.js-product-grid').innerHTML = productsHTML;
+
+document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+    button.addEventListener('click',()=>{
+        /*                      My code
+        cart.push(products[index]);
+        console.log(cart);
+        */
+       const productId = button.dataset.productId;  //remember productName will get converted from kebab-case to camelCase
+       let matchingItem ;
+       cart.forEach((item)=>{
+        if(item.productId === productId){
+            matchingItem = item ;
+        }
+       });
+
+       if(matchingItem){
+        matchingItem.quantity +=1;
+       }else{
+        cart.push({
+        productId : productId,
+        quantity : 1
+       })
+       }
+
+       console.log(cart);
+    })
+})
